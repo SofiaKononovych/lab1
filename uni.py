@@ -103,6 +103,7 @@ class Cathedra:
 
     #
     def sort_by_year(self, year):
+
         values = self.students.values()
         keys = self.students.keys()
         for k in keys:
@@ -123,7 +124,34 @@ class Cathedra:
                     return
         print("No teachers with on this cathedra found.")
 
-    #sort by name
+    ## item 7
+
+    def sort_student_by_year(self):
+        curse = []
+        keys = self.students.keys()
+        values = self.students.values()
+        for k in keys:
+            for v in values:
+
+
+    ### item 8
+    def sort_student_by_name(self):
+        names = []
+        keys = self.students.keys()
+        for k in keys:
+            names.append(k)
+        names_sorted = sorted(names)
+        for i in len(names_sorted):
+            print(i)
+
+    def sort_teacher_by_name(self):
+        names = []
+        keys = self.teachers.keys()
+        for k in keys:
+            names.append(k)
+        names_sorted = sorted(names)
+        for i in len(names_sorted):
+            print(i)
 
 
 
