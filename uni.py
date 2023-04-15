@@ -8,9 +8,8 @@ all_faculties = []
 
 #Student class
 class Student:
-    def __init__(self, name, surname, year_of_studying, group, cathedra):
+    def __init__(self, name, year_of_studying, group, cathedra):
         self.name = name
-        self.surname = surname
         self.year_year_of_studying = year_of_studying
         self.group = group
         self.cathedra = cathedra
@@ -18,9 +17,8 @@ class Student:
 
 #Teacher class
 class Teacher:
-    def __init__(self, name, surname, cathedra, group):
+    def __init__(self, name, cathedra, group):
         self.name = name
-        self.surname = surname
         self.cathedra = cathedra
         self.group = group
 
@@ -52,6 +50,7 @@ class Faculty:
 
 
 
+
     # output all students
 
     # output all teachers
@@ -61,17 +60,25 @@ class Faculty:
     def get_students_sorted(self):
         all_students_box = []
         for cathedra in self.cathedras:
-            # cathedra_stud = cathedra.students
-            keys = cathedra.students.keys()
-            for k in keys:
-                all_students_box.append(k)
+            for stud in cathedra.students:
+                all_students_box.append(stud.name)
         sort = sorted(all_students_box)
         leng_of_list = len(sort)
         if leng_of_list == 0:
             print("No students available yet.")
             return
-        for i in range(leng_of_list):
-            print(sort[i])
+        print(f"All students of {self.name} faculty sorted by alphabet:")
+        for name in range(leng_of_list):
+            print(sort[name])
+
+    #5
+    def sort_student_by_year(self):
+        sorted = sorted(self.students, key=lambda x: x.year_of_studying)
+        for year in range(6):
+            print(f"** Year {year} students list: **")
+            for stud in sorted:
+                if stud.year_of_studying == year:
+                    print("Year: {stud.year_of_studying} . Name: {stud.name}")
 
 
 
@@ -79,67 +86,134 @@ class Cathedra:
     def __init__(self, name):
         self.name = name
 
-        self.teachers = {}
-        self.students = {}
+        self.teachers = []
+        self.students = []
 
     def add_student(self, student):
         if isinstance(student, Student):
-
+            self.students.append(student)
             # student_name = student.name+student.surname
             # add_stud = {student_name:(student.group, student.year_year_of_studying, student.cathedra)}
             # self.students.update(add_stud)
-            print(f"We added {student_name} to Faculty.")
+            print(f"We added {student.name} to Faculty.")
             return
 
     def add_teacher(self, teacher):
         if isinstance(teacher, Teacher):
-            teacher_name = teacher.name+teacher.surname
-            add_stud = {teacher_name:teacher.cathedra}
-            self.teachers.update(add_stud)
-            print(f"We added {teacher_name} to Faculty.")
+            self.students.append(teacher)
+            # teacher_name = teacher.name+teacher.surname
+            # add_stud = {teacher_name:teacher.cathedra}
+            # self.teachers.update(add_stud)
+            print(f"We added {teacher.name} to Faculty.")
             return
 
     def remove_student(self, student):
-
-        if isinstance(student, Student):
-            students = self.students.keys()
-            search = student.name + student.surname
-            for stud in students:
-                if stud == search:
-                    print(f"{stud} was deleted from faculty.")
-                    self.students.pop(stud)
-                    return
+        # if isinstance(student, Student):
+            # students = self.students.keys()
+            # search = student.name + student.surname
+        for stud in self.students:
+            if stud.name == student:
+                print(f"{stud.name} was deleted from faculty.")
+                self.students.remove(stud)
+                return
         print("No students with this name found.")
         return
 
     def remove_teacher(self, teacher):
-
-        if isinstance(teacher, Teacher):
-            teachers = self.teachers.keys()
-            search = teacher.name + teacher.surname
-            for teach in teachers:
-                if teach == search:
-                    print(f"{teach} was deleted from faculty.")
-                    self.teachers.pop(teach)
-                    return
+        for teach in self.teachers:
+            if teach.name == teacher:
+                print(f"{teach.name} was deleted from faculty.")
+                self.teachers.remove(teach)
+                return
         print("No students with this name found.")
         return
 
-    def edit_student(self, students):
+    def edit_student(self, student):
+        for stud in self.students:
+            if stud.name == student:
+                print(f"Info about student {stud.name}: year of studying - {stud.year_of_studying}, group - {stud.group}, cathedra - {stud.cathedra}")
+            else:
+                print("No info about a teacher with this name found.")
+                return
+
 
 
     def edit_teacher(self, teacher):
-        print(f"")
+        for teach in self.teachers:
+            try:
+                if teach.name == teacher:
+                    print(f"Now you are able to edit {teach.name} . Additional info: group {teach.group}, cathedra: {teach.cathedra}.")
+            except:
+                print("No info about a teacher with this name found.")
+                break
+            while True:
+                ask = input("What do you want to edit? (Name - N, Group - G, End - E) ").lower
+                if ask.startswith("n"):
+                    name_set = input("Enter new name and surname:")
+                    teach.name = name_set
+                elif ask.startswith("g"):
+                    group_set = input("Enter new group:")
+                    teach.group = group_set
+                elif ask.startswith("e"):
+                    break
+                else:
+                    continue
+        print("All changes saved.")
         return
 
-
+    #4
     def get_student_by_surname(self, surname):
-        keys = self.students.keys()
-        for k in keys:
-            if k == surname:
-                print(f"Info about student {surname}: year of studying - {self.students[k][0]}, group - {self.students[k][1]}, cathedra - {self.students[k][2]}")
+        for stud in self.students:
+            if stud.name == surname:
+                print(f"Info about student {stud.name}: year of studying - {stud.year_of_studying}, group - {stud.group}, cathedra - {stud.cathedra}")
                 return
         print("No students with this name found.")
+
+    def get_teacher_by_surname(self, surname):
+        for teach in self.teachers:
+            if teach.name == surname:
+                print(f"Info about student {teach.name}: year of studying - {teach.year_of_studying}, group - {teach.group}, cathedra - {teach.cathedra}")
+                return
+        print("No teachers with this name found.")
+
+    def get_student_by_year(self, year):
+        result = []
+        for stud in self.students:
+            if stud.year_of_studying == year:
+                result.append(stud)
+                print(f"Students of {stud.year_of_studying} course: {[stud.name for _ in result]}")
+                return
+        print("No students on this year of studying found.")
+
+    def get_student_by_group(self, group):
+        result = []
+        for stud in self.students:
+            if stud.group == group:
+                result.append(stud)
+                print(f"Students of {stud.group} group: {[stud.group for _ in result]}")
+                return
+        print("No students of this group of studying found.")
+
+    def get_teacher_by_group(self, group):
+        result = []
+        for teach in self.teachers:
+            if teach.group == group:
+                result.append(teach)
+                print(f"Students of {teach.group} group: {[teach.group for _ in result]}")
+                return
+        print("No students of this group of studying found.")
+
+
+    #9
+    def get_stud_of_cath_by_year(self, cathedra, year):
+        result = []
+        for stud in self.students:
+            if  stud.year == year and stud.cathedra == cathedra:
+                result.append(stud)
+                print(f"Students of {stud.cathedra} and {stud.year} course: {[stud for _ in result]}")
+                return
+        print('No students on cathedra of this year found')
+
     # def sort_by_year(self, year):
     #
     #     values = self.students.values()
@@ -166,59 +240,53 @@ class Cathedra:
     ## item 7
 
     def sort_student_by_year(self):
-        for k, v in sorted(students.items(), key=lambda p: p[1]):
-            print(k, v[1])
+        sorted = sorted(self.students, key=lambda x: x.year_of_studying)
+        for year in range(6):
+            print(f"** Year {year} students list: **")
+            for stud in sorted:
+                if stud.year_of_studying == year:
+                    print("Year: {stud.year_of_studying} . Name: {stud.name}")
+
+
+            #[{'name1', 1}, {'name2, 1'}, {'name3', 2}, {'name2', 3}]
 
 
     ### item 8
     def sort_student_by_name(self):
         names = []
-        keys = self.students.keys()
-        for k in keys:
-            names.append(k)
+        for stud in self.students:
+            names.append(stud.name)
         names_sorted = sorted(names)
-        leng_of_list = len(names_sorted)
-        for i in range(leng_of_list):
-            print(names_sorted[i])
-        if leng_of_list == 0:
+        for name in names:
+            print(names_sorted[name])
+        if len(names) == 0:
             print("No students available yet.")
         return names
 
     def sort_teacher_by_name(self):
         names = []
-        keys = self.teachers.keys()
-        for k in keys:
-            names.append(k)
+        for teach in self.teachers:
+            names.append(teach.name)
         names_sorted = sorted(names)
-        leng_of_list = len(names_sorted)
-        for i in range(leng_of_list):
-            print(names_sorted[i])
-        if leng_of_list == 0:
+        for name in names_sorted:
+            print(names_sorted[name])
+        if len(names) == 0:
             print("No teachers available yet.")
 
     # item 10
 
     def sort_student_of_course_by_alph(self, course):
         student_box = []
-        keys = self.students.keys()
-        for k in keys:
-            v = self.students.get(k)
-            if v[1] == course:
-                student_box.append(k)
+        for stud in self.students:
+             if stud.year_of_studying == course:
+                 student_box.append(stud.name)
         sorted_list = sorted(student_box)
-        print(sorted_list)
+        print(f"Students of {course} course:")
+        for name in sorted_list:
+            print(name)
         if len(student_box) == 0:
             print(f"No students of year {course} on the cathedra yet.")
 
-
-
-
-
-# sort by name/sur here:
-
-# sort by course here:
-
-#sort by group here:
 
 
 def available_faculties():
@@ -257,8 +325,6 @@ def teacher_pref():
         faculty.add_teacher(teacher)
     return
 
-#student = Student(name_faker(), surname_faker(), 1, 1)
-#teacher = Teacher(name_faker(), surname_faker(), "Mathematics")
 
 
 def faculty_create():
