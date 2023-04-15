@@ -1,10 +1,6 @@
 import random
 
-# from faker import Faker
-# fake = Faker()
-
 all_faculties = []
-
 
 #Student class
 class Student:
@@ -92,25 +88,16 @@ class Cathedra:
     def add_student(self, student):
         if isinstance(student, Student):
             self.students.append(student)
-            # student_name = student.name+student.surname
-            # add_stud = {student_name:(student.group, student.year_year_of_studying, student.cathedra)}
-            # self.students.update(add_stud)
             print(f"We added {student.name} to Faculty.")
             return
 
     def add_teacher(self, teacher):
         if isinstance(teacher, Teacher):
             self.students.append(teacher)
-            # teacher_name = teacher.name+teacher.surname
-            # add_stud = {teacher_name:teacher.cathedra}
-            # self.teachers.update(add_stud)
             print(f"We added {teacher.name} to Faculty.")
             return
 
     def remove_student(self, student):
-        # if isinstance(student, Student):
-            # students = self.students.keys()
-            # search = student.name + student.surname
         for stud in self.students:
             if stud.name == student:
                 print(f"{stud.name} was deleted from faculty.")
@@ -214,17 +201,6 @@ class Cathedra:
                 return
         print('No students on cathedra of this year found')
 
-    # def sort_by_year(self, year):
-    #
-    #     values = self.students.values()
-    #     keys = self.students.keys()
-    #     for k in keys:
-    #         for v in values:
-    #             if v[0] == year:
-    #                 print(f"{k} is on {v[0]} course.")
-    #                 return
-    #     print("No students with this name found.")
-
 
     #output all cathedra
     def get_teacher(self, cathedra):
@@ -286,13 +262,6 @@ class Cathedra:
             print(name)
         if len(student_box) == 0:
             print(f"No students of year {course} on the cathedra yet.")
-
-
-
-def available_faculties():
-    for i in range(len(all_faculties)):
-        print(i)
-    return
 
 # name generator
 def name_faker():
@@ -371,25 +340,4 @@ def cathedra_create():
 
 faculty_create()
 print(all_faculties)
-# cathedra_create()
-def main():
-    while True:
-        ask = input(''' *** MENU ***
-
-Quit
->>
-''').lower()
-        if ask.startswith("q"):
-            break
-        # elif ask.startswith("a"):
-        #     what = input("Choose the option to add(Student/Teacher/Faculty/Cathedra):").lower()
-        #     if what.startswith("s"):
-        #         student_pref()
-        #     elif what.startswith("t"):
-        #         teacher_pref()
-        #         return
-        #     elif what.startswith("f"):
-        #         faculty.to_the_all_faculties()
-        #     elif what.startswith("c"):
-        #         return
 
