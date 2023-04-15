@@ -18,10 +18,11 @@ class Student:
 
 #Teacher class
 class Teacher:
-    def __init__(self, name, surname, cathedra):
+    def __init__(self, name, surname, cathedra, group):
         self.name = name
         self.surname = surname
         self.cathedra = cathedra
+        self.group = group
 
 
 class Faculty:
@@ -35,49 +36,46 @@ class Faculty:
     def remove_cathedra(self, cathedra):
         self.cathedras.remove(cathedra)
 
-    def edit_cathedra(self, cathedra, new_name):
-        self.cathedras.remove(cathedra.name)
-        self.cathedras.append(new_name)
+    def edit_cathedra(self):
+        print("List of available cathedras:")
+        if len(self.cathedras) == 0:
+            print("No cathedras created yet. Try to add one to edit it first.")
+            return
+        for cath in self.cathedras:
+            name = self.cathedras[cath].name
+            print(name)
+        new_name_set = input('Enter new name of this cathedra:')
+        if cathedra in self.cathedras:
+            cathedra.name == new_name_set
+            return
+        print('This cathedra is not in this Faculty')
+
+
 
     # output all students
 
     # output all teachers
 
     #item 6
-    # def get_students_sorted(self):
-    #     all_students_box = []
-    #     all_cathedras = len(self.cathedras)
-    #     for i in range(all_cathedras):
-    #         cathedra = self.cathedras[i]
-    #         names = cathedra.sort_student_by_name()
-    #         all_students_box.append(names)
-    #     names_sorted = sorted(all_students_box)
-    #     leng_of_list = len(names_sorted)
-    #     for i in range(leng_of_list):
-    #         print(names[i])
-    #     if leng_of_list == 0:
-    #         print("No students available yet.")
-    #     return
 
     def get_students_sorted(self):
         all_students_box = []
-        all_cathedras = len(self.cathedras)
-        for i in range(all_cathedras):
-            cathedra = self.cathedras[i].students
-            keys = cathedra.keys()
+        for cathedra in self.cathedras:
+            # cathedra_stud = cathedra.students
+            keys = cathedra.students.keys()
             for k in keys:
                 all_students_box.append(k)
         sort = sorted(all_students_box)
         leng_of_list = len(sort)
-        for i in range(leng_of_list):
-            print(sort[i])
         if leng_of_list == 0:
             print("No students available yet.")
-        return
+            return
+        for i in range(leng_of_list):
+            print(sort[i])
+
 
 
 class Cathedra:
-
     def __init__(self, name):
         self.name = name
 
@@ -85,16 +83,15 @@ class Cathedra:
         self.students = {}
 
     def add_student(self, student):
-
         if isinstance(student, Student):
-            student_name = student.name+student.surname
-            add_stud = {student_name:(student.group, student.year_year_of_studying, student.cathedra)}
-            self.students.update(add_stud)
+
+            # student_name = student.name+student.surname
+            # add_stud = {student_name:(student.group, student.year_year_of_studying, student.cathedra)}
+            # self.students.update(add_stud)
             print(f"We added {student_name} to Faculty.")
             return
 
     def add_teacher(self, teacher):
-
         if isinstance(teacher, Teacher):
             teacher_name = teacher.name+teacher.surname
             add_stud = {teacher_name:teacher.cathedra}
@@ -128,7 +125,21 @@ class Cathedra:
         print("No students with this name found.")
         return
 
-    #
+    def edit_student(self, students):
+
+
+    def edit_teacher(self, teacher):
+        print(f"")
+        return
+
+
+    def get_student_by_surname(self, surname):
+        keys = self.students.keys()
+        for k in keys:
+            if k == surname:
+                print(f"Info about student {surname}: year of studying - {self.students[k][0]}, group - {self.students[k][1]}, cathedra - {self.students[k][2]}")
+                return
+        print("No students with this name found.")
     # def sort_by_year(self, year):
     #
     #     values = self.students.values()
@@ -139,6 +150,7 @@ class Cathedra:
     #                 print(f"{k} is on {v[0]} course.")
     #                 return
     #     print("No students with this name found.")
+
 
     #output all cathedra
     def get_teacher(self, cathedra):
@@ -250,11 +262,29 @@ def teacher_pref():
 
 
 def faculty_create():
-    name = input("Enter the name of faculty:")
+    name = input("Enter the name of faculty you want to create:")
     faculty = Faculty(name)
     all_faculties.append(faculty)
+    print(f"Faculty {faculty.name} successfully created")
 
-#not finished yet:
+def faculty_delete():
+    name_to_delete = input("Enter the name of faculty you want to delete:")
+    for faculty in all_faculties:
+        if faculty.name == name_to_delete:
+            all_faculties.delete(faculty)
+            return
+    print("No faculty with this name found.")
+
+def faculty_delete():
+    origin_name = input("Enter the name of faculty you want to edit:")
+    new_name = input("Enter the name of faculty you want to replace the original name with:")
+    for faculty in all_faculties:
+        if faculty.name == origin_name:
+            faculty.name == new_name
+            return
+    print("No faculty with this name found.")
+
+
 def cathedra_create():
     name = input("Enter the name of cathedra:")
     cathedra = Cathedra(name)
@@ -272,9 +302,10 @@ def cathedra_create():
             all_faculties[i].add_cathedra(cathedra)
     return
 
+
 faculty_create()
 print(all_faculties)
-cathedra_create()
+# cathedra_create()
 def main():
     while True:
         ask = input(''' *** MENU ***
