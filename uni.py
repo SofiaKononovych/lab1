@@ -43,10 +43,22 @@ class Faculty:
 
     # output all teachers
 
-    def get_students_by_year(self):
+    #item 6
+    def get_students_sorted(self):
+        all_students_box = []
+        all_cathedras = len(self.cathedras)
+        for i in range(all_cathedras):
+            cathedra = self.cathedras[i]
+            names = cathedra.sort_student_by_name()
+            all_students_box.append(names)
+        names_sorted = sorted(all_students_box)
+        leng_of_list = len(names_sorted)
+        for i in range(leng_of_list):
+            print(names[i])
+        if leng_of_list == 0:
+            print("No students available yet.")
         return
-# def to_all_faculties(self):
-# all_faculties.append("Faculty")
+
 
 
 class Cathedra:
@@ -102,16 +114,16 @@ class Cathedra:
         return
 
     #
-    def sort_by_year(self, year):
-
-        values = self.students.values()
-        keys = self.students.keys()
-        for k in keys:
-            for v in values:
-                if v[0] == year:
-                    print(f"{k} is on {v[0]} course.")
-                    return
-        print("No students with this name found.")
+    # def sort_by_year(self, year):
+    #
+    #     values = self.students.values()
+    #     keys = self.students.keys()
+    #     for k in keys:
+    #         for v in values:
+    #             if v[0] == year:
+    #                 print(f"{k} is on {v[0]} course.")
+    #                 return
+    #     print("No students with this name found.")
 
     #output all cathedra
     def get_teacher(self, cathedra):
@@ -143,6 +155,7 @@ class Cathedra:
             print(names[i])
         if leng_of_list == 0:
             print("No students available yet.")
+        return names
 
     def sort_teacher_by_name(self):
         names = []
