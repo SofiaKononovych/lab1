@@ -1,7 +1,7 @@
 import random
 
-from faker import Faker
-fake = Faker()
+# from faker import Faker
+# fake = Faker()
 
 all_faculties = []
 
@@ -209,9 +209,6 @@ class Cathedra:
 #sort by group here:
 
 
-
-faculty = Faculty()
-
 def available_faculties():
     for i in range(len(all_faculties)):
         print(i)
@@ -249,18 +246,35 @@ def teacher_pref():
     return
 
 #student = Student(name_faker(), surname_faker(), 1, 1)
-teacher = Teacher(name_faker(), surname_faker(), "Mathematics")
-
-# fi = FiFaculty()
-# fi.add_teacher(teacher)
-# fi.get_teacher("Mathematics")
-# fi.remove_teacher(teacher)
-# fi.get_student(1)
-# fi.get_teacher("Mathematics")
+#teacher = Teacher(name_faker(), surname_faker(), "Mathematics")
 
 
+def faculty_create():
+    name = input("Enter the name of faculty:")
+    faculty = Faculty(name)
+    all_faculties.append(faculty)
 
+#not finished yet:
+def cathedra_create():
+    name = input("Enter the name of cathedra:")
+    cathedra = Cathedra(name)
+    all = []
+    if len(all_faculties) == 0:
+        print("No faculties added yet.")
+        return
+    for i in range(len(all_faculties)):
+        element = all_faculties[i]
+        typed = element.name
+        all.append(typed)
+    ask = input(f"Locate your cathedra to one of the faculties: {all}(enter the full name)")
+    for i in range(len(all)):
+        if ask == all[i]:
+            all_faculties[i].add_cathedra(cathedra)
+    return
 
+faculty_create()
+print(all_faculties)
+cathedra_create()
 def main():
     while True:
         ask = input(''' *** MENU ***
@@ -281,6 +295,4 @@ Quit
         #         faculty.to_the_all_faculties()
         #     elif what.startswith("c"):
         #         return
-
-main()
 
