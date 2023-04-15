@@ -44,21 +44,36 @@ class Faculty:
     # output all teachers
 
     #item 6
+    # def get_students_sorted(self):
+    #     all_students_box = []
+    #     all_cathedras = len(self.cathedras)
+    #     for i in range(all_cathedras):
+    #         cathedra = self.cathedras[i]
+    #         names = cathedra.sort_student_by_name()
+    #         all_students_box.append(names)
+    #     names_sorted = sorted(all_students_box)
+    #     leng_of_list = len(names_sorted)
+    #     for i in range(leng_of_list):
+    #         print(names[i])
+    #     if leng_of_list == 0:
+    #         print("No students available yet.")
+    #     return
+
     def get_students_sorted(self):
         all_students_box = []
         all_cathedras = len(self.cathedras)
         for i in range(all_cathedras):
-            cathedra = self.cathedras[i]
-            names = cathedra.sort_student_by_name()
-            all_students_box.append(names)
-        names_sorted = sorted(all_students_box)
-        leng_of_list = len(names_sorted)
+            cathedra = self.cathedras[i].students
+            keys = cathedra.keys()
+            for k in keys:
+                all_students_box.append(k)
+        sort = sorted(all_students_box)
+        leng_of_list = len(sort)
         for i in range(leng_of_list):
-            print(names[i])
+            print(sort[i])
         if leng_of_list == 0:
             print("No students available yet.")
         return
-
 
 
 class Cathedra:
@@ -66,8 +81,8 @@ class Cathedra:
     def __init__(self, name):
         self.name = name
 
-    teachers = {}
-    students = {}
+        self.teachers = {}
+        self.students = {}
 
     def add_student(self, student):
 
@@ -152,7 +167,7 @@ class Cathedra:
         names_sorted = sorted(names)
         leng_of_list = len(names_sorted)
         for i in range(leng_of_list):
-            print(names[i])
+            print(names_sorted[i])
         if leng_of_list == 0:
             print("No students available yet.")
         return names
@@ -165,7 +180,7 @@ class Cathedra:
         names_sorted = sorted(names)
         leng_of_list = len(names_sorted)
         for i in range(leng_of_list):
-            print(names[i])
+            print(names_sorted[i])
         if leng_of_list == 0:
             print("No teachers available yet.")
 
@@ -249,26 +264,23 @@ teacher = Teacher(name_faker(), surname_faker(), "Mathematics")
 def main():
     while True:
         ask = input(''' *** MENU ***
-Add
-Delete
-Check 
-Edit
+
 Quit
 >>
 ''').lower()
         if ask.startswith("q"):
             break
-        elif ask.startswith("a"):
-            what = input("Choose the option to add(Student/Teacher/Faculty/Cathedra):").lower()
-            if what.startswith("s"):
-                student_pref()
-            elif what.startswith("t"):
-                teacher_pref()
-                return
-            elif what.startswith("f"):
-                faculty.to_the_all_faculties()
-            elif what.startswith("c"):
-                return
+        # elif ask.startswith("a"):
+        #     what = input("Choose the option to add(Student/Teacher/Faculty/Cathedra):").lower()
+        #     if what.startswith("s"):
+        #         student_pref()
+        #     elif what.startswith("t"):
+        #         teacher_pref()
+        #         return
+        #     elif what.startswith("f"):
+        #         faculty.to_the_all_faculties()
+        #     elif what.startswith("c"):
+        #         return
 
 main()
 
