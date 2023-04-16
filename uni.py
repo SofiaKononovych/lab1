@@ -45,7 +45,14 @@ class Faculty:
         print('This cathedra is not in this Faculty')
 
 
+
+
+    # output all students
+
+    # output all teachers
+
     #item 6
+
     def get_students_sorted(self):
         all_students_box = []
         for cathedra in self.cathedras:
@@ -60,21 +67,7 @@ class Faculty:
         for name in range(leng_of_list):
             print(sort[name])
 
-    def get_teachers_sorted(self):
-        all_teachers_box = []
-        for cathedra in self.cathedras:
-            for teach in cathedra.teachers:
-                all_students_box.append(teach.name)
-        sort = sorted(all_teachers_box)
-        leng_of_list = len(sort)
-        if leng_of_list == 0:
-            print("No teachers available yet.")
-            return
-        print(f"All teachers of {self.name} faculty sorted by alphabet:")
-        for name in range(leng_of_list):
-            print(sort[name])
-
-    # item 5
+    #5
     def sort_student_by_year(self):
         sorted = sorted(self.students, key=lambda x: x.year_of_studying)
         for year in range(6):
@@ -125,7 +118,9 @@ class Cathedra:
     def edit_student(self, student):
         for stud in self.students:
             if stud.name == student:
-                print(f"Info about student {stud.name}: year of studying - {stud.year_of_studying}, group - {stud.group}, cathedra - {stud.cathedra}")
+                print(f"Info about student {stud.name}: year of studying - 1, group - {stud.group}, cathedra - {stud.cathedra}")
+                stud = student_pref(self.name)
+                print("Chages saved.")
             else:
                 print("No info about a teacher with this name found.")
                 return
@@ -209,6 +204,7 @@ class Cathedra:
         print('No students on cathedra of this year found')
 
 
+    #output all cathedra
     def get_teacher(self, cathedra):
         values = self.teachers.values()
         keys = self.teachers.keys()
@@ -232,16 +228,19 @@ class Cathedra:
 
             #[{'name1', 1}, {'name2, 1'}, {'name3', 2}, {'name2', 3}]
 
+
     ### item 8
     def sort_student_by_name(self):
         names = []
         for stud in self.students:
             names.append(stud.name)
         names_sorted = sorted(names)
-        for name in names:
-            print(names_sorted[name])
         if len(names) == 0:
             print("No students available yet.")
+            return
+        print("LIST OF STUDENTS SORTED BY ALPHABET")
+        for nam in names:
+            print(nam)
         return names
 
     def sort_teacher_by_name(self):
@@ -249,10 +248,13 @@ class Cathedra:
         for teach in self.teachers:
             names.append(teach.name)
         names_sorted = sorted(names)
-        for name in names_sorted:
-            print(names_sorted[name])
         if len(names) == 0:
-            print("No teachers available yet.")
+            print("No students available yet.")
+            return
+        print("LIST OF TEACHERS SORTED BY ALPHABET")
+        for nam in names:
+            print(nam)
+        return names
 
     # item 10
 
@@ -268,38 +270,6 @@ class Cathedra:
         if len(student_box) == 0:
             print(f"No students of year {course} on the cathedra yet.")
 
-# name generator
-def name_faker():
-    name = fake.first_name()
-    return name
-
-#surname generator
-def surname_faker():
-    surname = " "+fake.last_name()
-    return surname
-
-def student_pref():
-    if len(all_faculties) == 0:
-        print("You have to add at least one faculty firstly.")
-        return
-    student = Student(name_faker(), 1, 1, 1)
-    faculty = input(f"Enter the faculty you want to enroll your student in: {all_faculties}:").lower()
-    if faculty.startswith('fi'):
-        faculty.add_student(student)
-    return
-
-def teacher_pref():
-    if len(all_faculties) == 0 :
-        print("You have to add at least one faculty firstly.")
-        return
-    faculty = input(f"Add this teacher to one of the faculties: {all_faculties}")
-    cathedra = input("Add this teacher to cathedra(Mathematics/):").lower()
-    teacher = Teacher(name_faker(), 1, 1)
-    if cathedra.startswith('fi'):
-        faculty.add_teacher(teacher)
-    return
-
-
 
 def faculty_create():
     name = input("Enter the name of faculty you want to create:")
@@ -307,15 +277,13 @@ def faculty_create():
     all_faculties.append(faculty)
     print(f"Faculty {faculty.name} successfully created")
 
-def faculty_delete():
-    name_to_delete = input("Enter the name of faculty you want to delete:")
-    for faculty in all_faculties:
-        if faculty.name == name_to_delete:
-            all_faculties.delete(faculty)
-            return
-    print("No faculty with this name found.")
 
-def faculty_delete():
+def faculty_delete(faculty):
+    def faculty_delete(faculty):
+        all_faculties.remove(faculty)
+
+
+def faculty_edit():
     origin_name = input("Enter the name of faculty you want to edit:")
     new_name = input("Enter the name of faculty you want to replace the original name with:")
     for faculty in all_faculties:
@@ -325,24 +293,50 @@ def faculty_delete():
     print("No faculty with this name found.")
 
 
-def cathedra_create():
+def cathedra_create(fac):
     name = input("Enter the name of cathedra:")
     cathedra = Cathedra(name)
-    all = []
-    if len(all_faculties) == 0:
-        print("No faculties added yet.")
-        return
-    for i in range(len(all_faculties)):
-        element = all_faculties[i]
-        typed = element.name
-        all.append(typed)
-    ask = input(f"Locate your cathedra to one of the faculties: {all}(enter the full name)")
-    for i in range(len(all)):
-        if ask == all[i]:
-            all_faculties[i].add_cathedra(cathedra)
+    fac.add_cathedra(cathedra)
+    # all = []
+    # for i in range(len(all_faculties)):
+    #     element = all_faculties[i]
+    #     typed = element.name
+    #     all.append(typed)
+    # ask = input(f"Locate your cathedra to one of the faculties: {all}(enter the full name)")
+    # for i in range(len(all)):
+    #     if ask == all[i]:
+    #         all_faculties[i].add_cathedra(cathedra)
     return
 
 
 faculty_create()
 print(all_faculties)
+
+# name generator
+def name_faker():
+    name = fake.first_name()
+    return name
+
+
+#surname generator
+def surname_faker():
+    surname = " "+fake.last_name()
+    return surname
+
+
+def student_pref(cathedra):
+    name = input("Enter name:")
+    year = int(input("Enter course:"))
+    group = int(input("Enter group:"))
+    student = Student(name, year, group, cathedra)
+    return student
+
+def teacher_pref(cathedra):
+    name = input("Enter name:")
+    group = int(input("Enter group:"))
+    teacher = Teacher(name, group, cathedra)
+    return teacher
+
+
+
 
