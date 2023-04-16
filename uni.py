@@ -265,14 +265,14 @@ class Cathedra:
 
 
 def faculty_create():
-    name = input("Enter the name of faculty you want to create:")
+    name = input("    Enter the name of faculty you want to create:")
     faculty = Faculty(name)
     for fac in all_faculties:
         if fac.name == faculty.name:
             print("This faculty was already added.")
             return
     all_faculties.append(faculty)
-    print(f"Faculty {faculty.name} successfully created")
+    print(f"    Faculty {faculty.name} successfully created")
 
 
 def faculty_delete(faculty):
@@ -280,8 +280,8 @@ def faculty_delete(faculty):
 
 
 def faculty_edit():
-    origin_name = input("Enter the name of faculty you want to edit:")
-    new_name = input("Enter the name of faculty you want to replace the original name with:")
+    origin_name = input("   Enter the name of faculty you want to edit:")
+    new_name = input("  Enter the name of faculty you want to replace the original name with:")
     for faculty in all_faculties:
         if faculty.name == origin_name:
             faculty.name == new_name
