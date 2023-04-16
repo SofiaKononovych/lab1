@@ -21,21 +21,30 @@ def main():
 
 def faculty_interaction():
     while True:
-        print("Here is the list of all faculties.")
-        for i in range(len(all_faculties)):
-            for fac in all_faculties:
-                print(f"{i + 1}.{fac.name}")
+        print("Here is the list of all faculties:")
+        if len(all_faculties) == 0:
+            print("No Faculties added yet.")
+        else:
+            for i in range(len(all_faculties)):
+                print(f"{i + 1}.{all_faculties[i].name}")
         print("Here is a list of actions you can do:")
         print("1. View info of faculty (enter the number of faculty)")
         print("2. Add faculty")
         print("3. Delete faculty")
         print("4. Go back")
-        ask = int(input('>>>'))
+        try:
+            ask = int(input('>>>'))
+        except:
+            print("ERROR: The input must be an integer.")
+            continue
         if ask == 1:
+            if len(all_faculties) == 0:
+                print("Try to add faculty first.")
+                continue
             num_fac = int(input('Enter the number of faculty \n>>>'))
-            # for i in range(len(all_faculties)):
-            #     for fac in all_faculties:
-            #         if fac == num_fac:
+            if num_fac > len(all_faculties):
+                print("No faculty under this number mentioned in list.")
+                continue
             fac = all_faculties[num_fac - 1]
             print(f"You chose {fac.name}! ")
             cathedra_interaction(fac)
@@ -46,7 +55,6 @@ def faculty_interaction():
             if choose <= len(all_faculties):
                 faculty = all_faculties[choose - 1]
                 faculty_delete(faculty)
-                return
             print("No faculty with this number")
         elif ask == 4:
             break
@@ -57,9 +65,12 @@ def faculty_interaction():
 def cathedra_interaction(fac):
     while True:
         print(f"Here is all cathedras on this faculty:")
-        for i in range(len(fac.cathedras)):
-            for cath in fac.cathedras:
-                print(f"{i + 1}.{cath.name}")
+        if len(all_faculties) == 0:
+            print("No Faculties added yet.")
+            print("Here is the list of all faculties:")
+        else:
+            for i in range(len(fac.cathedras)):
+                print(f"{i + 1}.{fac.cathedras[i].name}")
         print("Here is a list of actions you can do:")
         print("1. View info of cathedra (enter the number of cathedra")
         print("2. Add cathedra")
@@ -69,31 +80,37 @@ def cathedra_interaction(fac):
         print("6. Get all students sorted by alphabet")
         print("7. Get all teachers sorted by alphabet")
         print("8. Go back")
-        ask = int(input('>>>'))
+        try:
+            ask = int(input('>>>'))
+        except:
+            print("ERROR: The input must be an integer.")
+            continue
         if ask == 1:
+            if len(fac.cathedras) == 0:
+                print("Try to add cathedra first.")
+                continue
             num_cath = int(input('Enter the number of cathedra \n>>>'))
+            if num_cath > len(fac.cathedras):
+                continue
             cathedra = fac.cathedras[num_cath - 1]
-            # for i in range(fac.cathedras):
-            #     for cath in fac.cathedras:
-            #         if i == num_cath:
-            #             print(f"You chose {cath.name}! ")
-            #             student_teacher(cath)
             student_teacher(cathedra)
         elif ask == 2:
-            cathedra_create()
+            cathedra_create(fac)
         elif ask == 3:
             choose = int(input("Enter the number of cathedra you want to delete."))
             if choose <= len(fac.cathedras):
                 cath = fac.cathedras[choose - 1]
                 fac.remove_cathedra(cath)
-                return
             print("No cathedra with this number")
         elif ask == 4:
             num_cath = int(input('Enter the number of cathedra you want to edit\n>>>'))
+            if num_cath > len(fac.cathedras):
+                print("Wrong input. Try again.")
+                continue
             cathedra = fac.cathedras[num_cath - 1]
             fac.edit_cathedra(cathedra)
         elif ask == 5:
-            sort_student_by_year()
+            fac.sort_student_by_year()
         elif ask == 6:
             fac.get_students_sorted()
         elif ask == 7:
@@ -112,10 +129,10 @@ def student_teacher(cathedra):
     Delete Student (SD)     done
 
     Get Student by Surname (SBS)   done
-    Get Student By Year  (SBY) done
+    Get Student By Year  (GBY) done
     Get Students by Group (SBG) done
 
-    Sort all students of cathedra by year (SABY)  done
+    Sort all students of cathedra by year (SBY)  done
     Sort by alphabet (SBA)    done
     Sort students of the year (SGY) done
     Sort year by alphabet (SYA) done
@@ -147,13 +164,13 @@ def student_teacher(cathedra):
         elif ask.startswith("sbs"):  # SBS
             name = input("Enter the full name of student you want to find info about:")
             cathedra.get_student_by_surname(name)
-        elif ask.startswith("sby"):  # SBY
+        elif ask.startswith("gby"):  # GBY
             year = int(input("Enter the year and you`ll receive a list of students of this year:"))
             cathedra.get_student_by_year(year)
         elif ask.startswith("sbg"):  # SBG
             group = int(input("Enter the group and you`ll receive a list of students of this group:"))
             cathedra.get_student_by_group(group)
-        elif ask.startswith("saby"):  # SABY
+        elif ask.startswith("sby"):  # SBY
             cathedra.sort_student_by_year()
         elif ask.startswith("sba"):  # SBA
             cathedra.sort_student_by_name()
@@ -177,7 +194,7 @@ def student_teacher(cathedra):
             name = input("Enter the full name of teacher you want to find info about:")
             cathedra.get_teacher_by_surname(name)
         elif ask.startswith("tbg"):  # TBG
-            group = int(input("Enter the group and you'll receive the teacher who :"))
+            group = int(input("Enter the group and you'll receive the teacher who teaches this group:"))
             cathedra.get_teacher_by_group(group)
         elif ask.startswith("tba"):  # TBA
             cathedra.sort_teacher_by_name()
