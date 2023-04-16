@@ -5,7 +5,7 @@ all_faculties = []
 
 # Student class
 class Student:
-    def __init__(self, name, year_of_studying, cathedra, group):
+    def __init__(self, name, year_of_studying, group, cathedra):
         self.name = name
         self.year_year_of_studying = year_of_studying
         self.group = group
@@ -46,10 +46,16 @@ class Faculty:
             print("No students on this faculty found")
             return
         for year in range(6):
-            print(f"** Year {year} students list: **")
+
+            print(f"** Year {year+1} students list: **")
             for stud in all_student_listbox:
+                count = 0
                 if stud.year_year_of_studying== year:
-                    print(f"Year: {stud.year_year_of_studying} . Name: {stud.name}")
+                    print(f"Year: {stud.year_year_of_studying+1} . Name: {stud.name}")
+                    count +=1
+                if count == 0:
+                    print("No students here")
+
 
     # item 6
     def get_students_sorted(self):
@@ -182,10 +188,11 @@ class Cathedra:
 
     def get_teacher_by_group(self, group):
         result = []
+        print(f"Teachers of {group} group:")
         for teach in self.teachers:
             if teach.group == group:
                 result.append(teach)
-                print(f"Students of {teach.group} group: {[teach.group for _ in result]}")
+                print(teach.name)
                 return
         print("No teacher teaching in this group found.")
 
@@ -318,7 +325,7 @@ def teacher_pref(cathedra):
         group = int(input("Enter group(1-10):"))
         if group > 10:
             continue
-        teacher = Teacher(name, group, cathedra)
+        teacher = Teacher(name, cathedra, group)
         return teacher
 
 
