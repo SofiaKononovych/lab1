@@ -263,44 +263,13 @@ class Cathedra:
         if len(student_box) == 0:
             print(f"No students of year {course} on the cathedra yet.")
 
-# name generator
-def name_faker():
-    name = fake.first_name()
-    return name
-
-#surname generator
-def surname_faker():
-    surname = " "+fake.last_name()
-    return surname
-
-def student_pref():
-    if len(all_faculties) == 0:
-        print("You have to add at least one faculty firstly.")
-        return
-    student = Student(name_faker(), surname_faker(), 1, 1)
-    faculty = input(f"Enter the faculty you want to enroll your student in: {all_faculties}:").lower()
-    if faculty.startswith('fi'):
-        faculty.add_student(student)
-    return
-
-def teacher_pref():
-    if len(all_faculties) == 0 :
-        print("You have to add at least one faculty firstly.")
-        return
-    faculty = input(f"Add this teacher to one of the faculties: {all_faculties}")
-    cathedra = input("Add this teacher to cathedra(Mathematics/):").lower()
-    teacher = faculty.get_teacher("Mathematics")
-    if cathedra.startswith('fi'):
-        faculty.add_teacher(teacher)
-    return
-
-
 
 def faculty_create():
     name = input("Enter the name of faculty you want to create:")
     faculty = Faculty(name)
     all_faculties.append(faculty)
     print(f"Faculty {faculty.name} successfully created")
+
 
 def faculty_delete():
     name_to_delete = input("Enter the name of faculty you want to delete:")
@@ -310,7 +279,8 @@ def faculty_delete():
             return
     print("No faculty with this name found.")
 
-def faculty_delete():
+
+def faculty_edit():
     origin_name = input("Enter the name of faculty you want to edit:")
     new_name = input("Enter the name of faculty you want to replace the original name with:")
     for faculty in all_faculties:
@@ -340,4 +310,39 @@ def cathedra_create():
 
 faculty_create()
 print(all_faculties)
+
+# name generator
+def name_faker():
+    name = fake.first_name()
+    return name
+
+
+#surname generator
+def surname_faker():
+    surname = " "+fake.last_name()
+    return surname
+
+
+def student_pref():
+    if len(all_faculties) == 0:
+        print("You have to add at least one faculty firstly.")
+        return
+    student = Student(name_faker(), surname_faker(), 1, 1)
+    faculty = input(f"Enter the faculty you want to enroll your student in: {all_faculties}:").lower()
+    if faculty.startswith('fi'):
+        faculty.add_student(student)
+    return
+
+def teacher_pref():
+    if len(all_faculties) == 0 :
+        print("You have to add at least one faculty firstly.")
+        return
+    faculty = input(f"Add this teacher to one of the faculties: {all_faculties}")
+    cathedra = input("Add this teacher to cathedra(Mathematics/):").lower()
+    teacher = faculty.get_teacher("Mathematics")
+    if cathedra.startswith('fi'):
+        faculty.add_teacher(teacher)
+    return
+
+
 
