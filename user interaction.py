@@ -39,7 +39,7 @@ def faculty_interaction():
             continue
         if ask == 1:
             if len(all_faculties) == 0:
-                print(" !Try to add faculty first.")
+                print("     !Try to add faculty first.")
                 continue
             num_fac = int(input('Enter the number of faculty \n>>>'))
             if num_fac > len(all_faculties):
@@ -51,16 +51,22 @@ def faculty_interaction():
         elif ask == 2:
             faculty_create()
         elif ask == 3:
+            if len(all_faculties) == 0:
+                print("     !Try to add faculty first.")
+                continue
             choose = int(input("Enter the number of faculty you want to delete."))
             if choose <= len(all_faculties):
                 faculty = all_faculties[choose - 1]
                 faculty_delete(faculty)
             print("No faculty with this number")
         elif ask == 4:
+            origin_name = int(input("   Enter the number of faculty you want to edit:"))
             if len(all_faculties) == 0:
                 print("     !Try to add faculty first.")
                 continue
-            faculty_edit()
+            elif origin_name > len(all_faculties):
+                continue
+            faculty_edit(all_faculties[origin_name-1].name)
         elif ask == 5:
             break
         else:
@@ -86,45 +92,45 @@ def cathedra_interaction(fac):
         print("8. Go back")
         try:
             ask = int(input('>>>'))
+            if ask == 1:
+                if len(fac.cathedras) == 0:
+                    print("Try to add cathedra first.")
+                    continue
+                num_cath = int(input('Enter the number of cathedra \n>>>'))
+                if num_cath > len(fac.cathedras):
+                    continue
+                cathedra = fac.cathedras[num_cath - 1]
+                student_teacher(cathedra)
+            elif ask == 2:
+                cathedra_create(fac)
+            elif ask == 3:
+                choose = int(input("Enter the number of cathedra you want to delete."))
+                if choose <= len(fac.cathedras):
+                    cath = fac.cathedras[choose - 1]
+                    fac.remove_cathedra(cath)
+                print("No cathedra with this number")
+            elif ask == 4:
+                if len(all_faculties) == 0:
+                    print("     !Try to add cathedra first.")
+                    continue
+                num_cath = int(input('Enter the number of cathedra you want to edit\n>>>'))
+                if num_cath > len(fac.cathedras):
+                    print("Wrong input. Try again.")
+                    continue
+                cathedra = fac.cathedras[num_cath - 1]
+                fac.edit_cathedra(cathedra)
+            elif ask == 5:
+                fac.sort_student_by_year()
+            elif ask == 6:
+                fac.get_students_sorted()
+            elif ask == 7:
+                fac.get_teachers_sorted()
+            elif ask == 8:
+                break
+            else:
+                continue
         except:
             print("ERROR: The input must be an integer.")
-            continue
-        if ask == 1:
-            if len(fac.cathedras) == 0:
-                print("Try to add cathedra first.")
-                continue
-            num_cath = int(input('Enter the number of cathedra \n>>>'))
-            if num_cath > len(fac.cathedras):
-                continue
-            cathedra = fac.cathedras[num_cath - 1]
-            student_teacher(cathedra)
-        elif ask == 2:
-            cathedra_create(fac)
-        elif ask == 3:
-            choose = int(input("Enter the number of cathedra you want to delete."))
-            if choose <= len(fac.cathedras):
-                cath = fac.cathedras[choose - 1]
-                fac.remove_cathedra(cath)
-            print("No cathedra with this number")
-        elif ask == 4:
-            if len(all_faculties) == 0:
-                print("     !Try to add cathedra first.")
-                continue
-            num_cath = int(input('Enter the number of cathedra you want to edit\n>>>'))
-            if num_cath > len(fac.cathedras):
-                print("Wrong input. Try again.")
-                continue
-            cathedra = fac.cathedras[num_cath - 1]
-            fac.edit_cathedra(cathedra)
-        elif ask == 5:
-            fac.sort_student_by_year()
-        elif ask == 6:
-            fac.get_students_sorted()
-        elif ask == 7:
-            fac.get_teachers_sorted()
-        elif ask == 8:
-            break
-        else:
             continue
 
 

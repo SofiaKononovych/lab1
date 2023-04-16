@@ -33,7 +33,7 @@ class Faculty:
 
     def edit_cathedra(self, cathedra):
         new_name_set = input('Enter new name of this cathedra:')
-        cathedra.name == new_name_set
+        cathedra.name = new_name_set
 
     # 5
     def sort_student_by_year(self):
@@ -279,12 +279,11 @@ def faculty_delete(faculty):
     all_faculties.remove(faculty)
 
 
-def faculty_edit():
-    origin_name = input("   Enter the name of faculty you want to edit:")
-    new_name = input("  Enter the name of faculty you want to replace the original name with:")
+def faculty_edit(name):
+    new_name = input("   Enter the name of faculty you want to replace the original name with:")
     for faculty in all_faculties:
-        if faculty.name == origin_name:
-            faculty.name == new_name
+        if faculty.name == name:
+            faculty.name = new_name
             return
     print("No faculty with this name found.")
 
