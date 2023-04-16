@@ -30,29 +30,27 @@ class Faculty:
     def remove_cathedra(self, cathedra):
         self.cathedras.remove(cathedra)
 
-    def edit_cathedra(self):
-        print("List of available cathedras:")
-        if len(self.cathedras) == 0:
-            print("No cathedras created yet. Try to add one to edit it first.")
-            return
-        for cath in self.cathedras:
-            name = self.cathedras[cath].name
-            print(name)
+    def edit_cathedra(self, cathedra):
         new_name_set = input('Enter new name of this cathedra:')
-        if cathedra in self.cathedras:
-            cathedra.name == new_name_set
+        cathedra.name == new_name_set
+
+    # 5
+    def sort_student_by_year(self):
+        all_student_listbox = []
+        # sort = sorted(self.students, key=lambda x: x.year_of_studying)
+        for cath in self.cathedras:
+            for stud in cath.students:
+                all_student_listbox.append(stud)
+        if len(all_student_listbox) == 0:
+            print("No students on this faculty found")
             return
-        print('This cathedra is not in this Faculty')
-
-
-
-
-    # output all students
-
-    # output all teachers
+        for year in range(6):
+            print(f"** Year {year} students list: **")
+            for stud in all_student_listbox:
+                if stud.year_of_studying == year:
+                    print(f"Year: {stud.year_of_studying} . Name: {stud.name}")
 
     #item 6
-
     def get_students_sorted(self):
         all_students_box = []
         for cathedra in self.cathedras:
@@ -67,15 +65,19 @@ class Faculty:
         for name in range(leng_of_list):
             print(sort[name])
 
-    #5
-    def sort_student_by_year(self):
-        sorted = sorted(self.students, key=lambda x: x.year_of_studying)
-        for year in range(6):
-            print(f"** Year {year} students list: **")
-            for stud in sorted:
-                if stud.year_of_studying == year:
-                    print("Year: {stud.year_of_studying} . Name: {stud.name}")
-
+    def get_teachers_sorted(self):
+        all_teachers_box = []
+        for cathedra in self.cathedras:
+            for teach in cathedra.teschers:
+                all_teachers_box.append(teach.name)
+        sort = sorted(all_teachers_box)
+        leng_of_list = len(sort)
+        if leng_of_list == 0:
+            print("No teachers available yet.")
+            return
+        print(f"All students of {self.name} faculty sorted by alphabet:")
+        for name in range(leng_of_list):
+            print(sort[name])
 
 
 class Cathedra:
@@ -115,40 +117,51 @@ class Cathedra:
         print("No students with this name found.")
         return
 
-    def edit_student(self, student):
+    def edit_student(self, name):
         for stud in self.students:
-            if stud.name == student:
-                print(f"Info about student {stud.name}: year of studying - 1, group - {stud.group}, cathedra - {stud.cathedra}")
-                stud = student_pref(self.name)
-                print("Chages saved.")
+            if stud.name == name:
+                print(f"Info about student {stud.name}: year of studying - {stud.year_of_studying}, group - {stud.group}, cathedra - {stud.cathedra}")
+                edited_stud = student_pref(self.name)
+                self.students.remove(stud)
+                self.students.append(edited_stud)
+                print("Changes saved.")
             else:
-                print("No info about a teacher with this name found.")
+                print("No info about a student with this name found.")
                 return
 
-
-
-    def edit_teacher(self, teacher):
+    def edit_teacher(self, name):
         for teach in self.teachers:
-            try:
-                if teach.name == teacher:
-                    print(f"Now you are able to edit {teach.name} . Additional info: group {teach.group}, cathedra: {teach.cathedra}.")
-            except:
-                print("No info about a teacher with this name found.")
-                break
-            while True:
-                ask = input("What do you want to edit? (Name - N, Group - G, End - E) ").lower
-                if ask.startswith("n"):
-                    name_set = input("Enter new name and surname:")
-                    teach.name = name_set
-                elif ask.startswith("g"):
-                    group_set = input("Enter new group:")
-                    teach.group = group_set
-                elif ask.startswith("e"):
-                    break
-                else:
-                    continue
-        print("All changes saved.")
-        return
+            if teach.name == name:
+                print(f"Info about teacher {teach.name} cathedra - {stud.cathedra}, group {teach.group}")
+                edited_teach = teacher_pref(self.name)
+                self.teachers.remove(teach)
+                self.teachers.append(edited_teach)
+                print("Changes saved.")
+            else:
+                print("No info about teacher with this name found.")
+                return
+
+        # for teach in self.teachers:
+        #     try:
+        #         if teach.name == name:
+        #             print(f"Now you are able to edit {teach.name} . Additional info: group {teach.group}, cathedra: {teach.cathedra}.")
+        #     except:
+        #         print("No info about a teacher with this name found.")
+        #         break
+        #     while True:
+        #         ask = input("What do you want to edit? (Name - N, Group - G, End - E) ").lower
+        #         if ask.startswith("n"):
+        #             name_set = input("Enter new name and surname:")
+        #             teach.name = name_set
+        #         elif ask.startswith("g"):
+        #             group_set = input("Enter new group:")
+        #             teach.group = group_set
+        #         elif ask.startswith("e"):
+        #             break
+        #         else:
+        #             continue
+        # print("All changes saved.")
+        # return
 
     #4
     def get_student_by_surname(self, surname):
@@ -194,12 +207,12 @@ class Cathedra:
 
 
     #9
-    def get_stud_of_cath_by_year(self, cathedra, year):
+    def get_stud_of_cath_by_year(self, year):
         result = []
         for stud in self.students:
-            if  stud.year == year and stud.cathedra == cathedra:
+            if stud.year == year:
                 result.append(stud)
-                print(f"Students of {stud.cathedra} and {stud.year} course: {[stud for _ in result]}")
+                print(f"Students of {self.name} of {stud.year} course: {[stud for _ in result]}")
                 return
         print('No students on cathedra of this year found')
 
@@ -215,7 +228,7 @@ class Cathedra:
                     return
         print("No teachers with on this cathedra found.")
 
-    ## item 7
+    # item 7
 
     def sort_student_by_year(self):
         sorted = sorted(self.students, key=lambda x: x.year_of_studying)
@@ -279,7 +292,6 @@ def faculty_create():
 
 
 def faculty_delete(faculty):
-    def faculty_delete(faculty):
         all_faculties.remove(faculty)
 
 
@@ -297,31 +309,7 @@ def cathedra_create(fac):
     name = input("Enter the name of cathedra:")
     cathedra = Cathedra(name)
     fac.add_cathedra(cathedra)
-    # all = []
-    # for i in range(len(all_faculties)):
-    #     element = all_faculties[i]
-    #     typed = element.name
-    #     all.append(typed)
-    # ask = input(f"Locate your cathedra to one of the faculties: {all}(enter the full name)")
-    # for i in range(len(all)):
-    #     if ask == all[i]:
-    #         all_faculties[i].add_cathedra(cathedra)
     return
-
-
-faculty_create()
-print(all_faculties)
-
-# name generator
-def name_faker():
-    name = fake.first_name()
-    return name
-
-
-#surname generator
-def surname_faker():
-    surname = " "+fake.last_name()
-    return surname
 
 
 def student_pref(cathedra):
@@ -336,7 +324,4 @@ def teacher_pref(cathedra):
     group = int(input("Enter group:"))
     teacher = Teacher(name, group, cathedra)
     return teacher
-
-
-
 
