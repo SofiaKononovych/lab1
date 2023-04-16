@@ -17,10 +17,11 @@ Quit
         print("Here is the list of all faculties. Choose the faculty number.")
 
         for fac in all_faculties:
-            print ()
+            print()
 
 def faculty_interaction():
 
+    return
 
 
 

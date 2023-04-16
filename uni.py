@@ -45,14 +45,7 @@ class Faculty:
         print('This cathedra is not in this Faculty')
 
 
-
-
-    # output all students
-
-    # output all teachers
-
     #item 6
-
     def get_students_sorted(self):
         all_students_box = []
         for cathedra in self.cathedras:
@@ -67,7 +60,21 @@ class Faculty:
         for name in range(leng_of_list):
             print(sort[name])
 
-    #5
+    def get_teachers_sorted(self):
+        all_teachers_box = []
+        for cathedra in self.cathedras:
+            for teach in cathedra.teachers:
+                all_students_box.append(teach.name)
+        sort = sorted(all_teachers_box)
+        leng_of_list = len(sort)
+        if leng_of_list == 0:
+            print("No teachers available yet.")
+            return
+        print(f"All teachers of {self.name} faculty sorted by alphabet:")
+        for name in range(leng_of_list):
+            print(sort[name])
+
+    # item 5
     def sort_student_by_year(self):
         sorted = sorted(self.students, key=lambda x: x.year_of_studying)
         for year in range(6):
@@ -202,7 +209,6 @@ class Cathedra:
         print('No students on cathedra of this year found')
 
 
-    #output all cathedra
     def get_teacher(self, cathedra):
         values = self.teachers.values()
         keys = self.teachers.keys()
@@ -225,7 +231,6 @@ class Cathedra:
 
 
             #[{'name1', 1}, {'name2, 1'}, {'name3', 2}, {'name2', 3}]
-
 
     ### item 8
     def sort_student_by_name(self):
@@ -277,7 +282,7 @@ def student_pref():
     if len(all_faculties) == 0:
         print("You have to add at least one faculty firstly.")
         return
-    student = Student(name_faker(), surname_faker(), 1, 1)
+    student = Student(name_faker(), 1, 1, 1)
     faculty = input(f"Enter the faculty you want to enroll your student in: {all_faculties}:").lower()
     if faculty.startswith('fi'):
         faculty.add_student(student)
@@ -289,7 +294,7 @@ def teacher_pref():
         return
     faculty = input(f"Add this teacher to one of the faculties: {all_faculties}")
     cathedra = input("Add this teacher to cathedra(Mathematics/):").lower()
-    teacher = faculty.get_teacher("Mathematics")
+    teacher = Teacher(name_faker(), 1, 1)
     if cathedra.startswith('fi'):
         faculty.add_teacher(teacher)
     return
