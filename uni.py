@@ -20,11 +20,13 @@ class Teacher:
         self.group = group
 
 
+# Faculty class
 class Faculty:
     def __init__(self, name):
         self.name = name
         self.cathedras = []
 
+# task 2
     def add_cathedra(self, cathedra):
         self.cathedras.append(cathedra)
 
@@ -35,7 +37,7 @@ class Faculty:
         new_name_set = input('Enter new name of this cathedra:')
         cathedra.name = new_name_set
 
-    # 5
+# task 5
     def sort_student_by_year(self):
         all_student_listbox = []
         # sort = sorted(self.students, key=lambda x: x.year_of_studying)
@@ -57,7 +59,7 @@ class Faculty:
                     print("No students here")
 
 
-    # item 6
+# task 6
     def get_students_sorted(self):
         all_students_box = []
         for cathedra in self.cathedras:
@@ -87,6 +89,7 @@ class Faculty:
             print(sort[name])
 
 
+# Cathedra class
 class Cathedra:
     def __init__(self, name):
         self.name = name
@@ -94,6 +97,7 @@ class Cathedra:
         self.teachers = []
         self.students = []
 
+# task 3
     def add_student(self, student):
         self.students.append(student)
         print(f"We added {student.name} to Faculty.")
@@ -146,7 +150,7 @@ class Cathedra:
         print("No info about teacher with this name found.")
 
 
-    # 4
+# task 4
     def get_student_by_surname(self, surname):
         for stud in self.students:
             if stud.name == surname:
@@ -196,7 +200,7 @@ class Cathedra:
                 return
         print("No teacher teaching in this group found.")
 
-    # 9
+# task 9
     def get_stud_of_cath_by_year(self, year):
         result = []
         for stud in self.students:
@@ -206,7 +210,7 @@ class Cathedra:
                 return
         print('No students on cathedra of this year found')
 
-    # output all cathedra
+# output all cathedra
     def get_teacher(self, cathedra):
         values = self.teachers.values()
         keys = self.teachers.keys()
@@ -217,8 +221,7 @@ class Cathedra:
                     return
         print("No teachers with on this cathedra found.")
 
-    # item 7
-
+# task 7
     def sort_student_by_year(self):
         sorted = sorted(self.students, key=lambda x: x.year_of_studying)
         for year in range(6):
@@ -229,7 +232,7 @@ class Cathedra:
 
             # [{'name1', 1}, {'name2, 1'}, {'name3', 2}, {'name2', 3}]
 
-    ### item 8
+# task 8
     def sort_student_by_name(self):
         names = []
         for stud in self.students:
@@ -256,7 +259,7 @@ class Cathedra:
             print(nam)
         return names
 
-    # item 10
+# task 10
 
     def sort_student_of_course_by_alph(self, course):
         student_box = []
@@ -271,6 +274,7 @@ class Cathedra:
             print(f"No students of year {course} on the cathedra yet.")
 
 
+# task 1
 def faculty_create():
     name = input("    Enter the name of faculty you want to create:")
     faculty = Faculty(name)
@@ -295,6 +299,7 @@ def faculty_edit(name):
     print("No faculty with this name found.")
 
 
+# function which uses add_cathedra method
 def cathedra_create(fac):
     name = input("Enter the name of cathedra:")
     cathedra = Cathedra(name)
@@ -302,10 +307,10 @@ def cathedra_create(fac):
         if cath.name == cathedra.name:
             print("This faculty was already added.")
             return
-    fac.cathedras.append(cathedra)
+    fac.add_cathedra(cathedra)
     print(f"Faculty {cathedra.name} successfully created")
 
-
+# function for creating instances of students
 def student_pref(cathedra):
     while True:
         name = input("Enter name:")
@@ -319,6 +324,7 @@ def student_pref(cathedra):
         return student
 
 
+# function for creating instances of teachers
 def teacher_pref(cathedra):
     while True:
         name = input("Enter name:")
