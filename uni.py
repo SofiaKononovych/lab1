@@ -7,7 +7,7 @@ all_faculties = []
 class Student:
     def __init__(self, name, year_of_studying, group, cathedra):
         self.name = name
-        self.year_year_of_studying = year_of_studying
+        self.year_of_studying = year_of_studying
         self.group = group
         self.cathedra = cathedra
 
@@ -48,15 +48,22 @@ class Faculty:
             print("No students on this faculty found")
             return
         for year in range(6):
-
-            print(f"** Year {year+1} students list: **")
+            print(f"** Year {year+1} students: **")
             for stud in all_student_listbox:
-                count = 0
-                if stud.year_year_of_studying== year:
-                    print(f"Year: {stud.year_year_of_studying+1} . Name: {stud.name}")
-                    count +=1
-                if count == 0:
-                    print("No students here")
+                # count = 0
+                if stud.year_of_studying - 1 == year:
+                    print(stud.name)
+                #     count +=1
+                # if count == 0:
+                #     print("No students here")
+
+                # def sort_student_by_year(self):
+                #     sorted = sorted(self.students, key=lambda x: x.year_of_studying)
+                #     for year in range(6):
+                #         print(f"** Year {year} students list: **")
+                #         for stud in sorted:
+                #             if stud.year_of_studying == year:
+                #                 print(f"Year: {stud.year_of_studying} . Name: {stud.name}")
 
 
 # task 6
@@ -129,7 +136,7 @@ class Cathedra:
     def edit_student(self, name):
         for stud in self.students:
             if stud.name == name:
-                print(f"Info about student {stud.name}: year of studying - {stud.year_year_of_studying}, group - {stud.group}, cathedra - {stud.cathedra}")
+                print(f"Info about student {stud.name}: year of studying - {stud.year_of_studying}, group - {stud.group}, cathedra - {stud.cathedra}")
                 edited_stud = student_pref(self.name)
                 self.students.remove(stud)
                 self.students.append(edited_stud)
@@ -155,7 +162,7 @@ class Cathedra:
         for stud in self.students:
             if stud.name == surname:
                 print(
-                    f"Info about student {stud.name}: year of studying - {stud.year_year_of_studying}, group - {stud.group}, cathedra - {stud.cathedra}")
+                    f"Info about student {stud.name}: year of studying - {stud.year_of_studying}, group - {stud.group}, cathedra - {stud.cathedra}")
                 return
         print("No students with this name found.")
 
@@ -174,9 +181,10 @@ class Cathedra:
     def get_student_by_year(self, year):
         result = []
         for stud in self.students:
-            if stud.year_year_of_studying == year:
-                result.append(stud)
-                print(f"Students of {stud.year_year_of_studying} course: {[stud.name for _ in result]}")
+            if stud.year_of_studying == year:
+                result.append(stud.name)
+                print(f"Students of {stud.year_of_studying} course: ")
+                print(*result, sep="\n")
         if len(result) == 0:
             print("No students found.")
 
@@ -204,9 +212,9 @@ class Cathedra:
     def get_stud_of_cath_by_year(self, year):
         result = []
         for stud in self.students:
-            if stud.year_year_of_studying == year:
+            if stud.year_of_studying == year:
                 result.append(stud)
-                print(f"Students of {self.name} of {stud.year_year_of_studying} course: {[stud for _ in result]}")
+                print(f"Students of {self.name} of {stud.year_of_studying} course: {[stud.name for _ in result]}")
                 return
         print('No students on cathedra of this year found')
 
@@ -229,8 +237,6 @@ class Cathedra:
             for stud in sorted:
                 if stud.year_of_studying == year:
                     print(f"Year: {stud.year_of_studying} . Name: {stud.name}")
-
-            # [{'name1', 1}, {'name2, 1'}, {'name3', 2}, {'name2', 3}]
 
 # task 8
     def sort_student_by_name(self):
@@ -264,7 +270,7 @@ class Cathedra:
     def sort_student_of_course_by_alph(self, course):
         student_box = []
         for stud in self.students:
-            if stud.year_year_of_studying == course:
+            if stud.year_of_studying == course:
                 student_box.append(stud.name)
         sorted_list = sorted(student_box)
         print(f"Students of {course} course:")
@@ -314,11 +320,11 @@ def cathedra_create(fac):
 def student_pref(cathedra):
     while True:
         name = input("Enter name:")
-        group = int(input("Enter group(1-10):"))
-        if group > 10:
-            continue
-        year = int(input("Enter course (1-6):"))
+        year = int(input("Enter year of studying (1-6):"))
         if year > 6:
+            continue
+        group = int(input("Enter group (1-10):"))
+        if group > 10:
             continue
         student = Student(name, year, group, cathedra)
         return student
