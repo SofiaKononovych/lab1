@@ -197,16 +197,6 @@ class Cathedra:
         if len(result) == 0:
             print("No teacher teaching in this group found.")
 
-# output all cathedra
-    def get_teacher(self, cathedra):
-        values = self.teachers.values()
-        keys = self.teachers.keys()
-        for k in keys:
-            for v in values:
-                if v == cathedra:
-                    print(f"{k} is a member of {v} cathedra.")
-                    return
-        print("No teachers with on this cathedra found.")
 
 # task 7
     def sort_cath_student_by_year(self):
@@ -304,7 +294,7 @@ def cathedra_create(fac):
 # function for creating instances of students
 def student_pref(cathedra):
     while True:
-        name = input("Enter name:")
+        name = input("Enter surname and name (Example: Johnson Ann):")
         year = int(input("Enter year of studying (1-6):"))
         if year > 6:
             continue
@@ -318,7 +308,7 @@ def student_pref(cathedra):
 # function for creating instances of teachers
 def teacher_pref(cathedra):
     while True:
-        name = input("Enter name:")
+        name = input("Enter surname and name (Example: Johnson Ann):")
         group = int(input("Enter group(1-10):"))
         if group > 10:
             continue
