@@ -96,7 +96,7 @@ def cathedra_interaction(fac):
                 if len(fac.cathedras) == 0:
                     print("Try to add cathedra first.")
                     continue
-                num_cath = int(input('Enter the number of cathedra \n>>>'))
+                num_cath = int(input('Enter the number of cathedra: \n>>>'))
                 if num_cath > len(fac.cathedras):
                     continue
                 cathedra = fac.cathedras[num_cath - 1]
@@ -142,12 +142,11 @@ def student_teacher(cathedra):
     Delete Student (SD)  
 
     Get Student by Surname (SBS)
-    Get Student By Year  (GBY) !
-    Get Students by Group (SBG) !
-
-    Sort all students of cathedra by year (SBY)  ERROR: The input must be an integer.
+    Get Student By Year  (GBY) 
+    Get Students by Group (GBG) 
+  
     Sort by alphabet (SBA) 
-    Sort students of the year (SGY) Error: Students of Maths of 1 course: [<uni.Student object at 0x102d0a160>]
+    Sort all students by years (SGY) ERROR: The input must be an integer.
     Sort year by alphabet (SYA)
 
 
@@ -158,7 +157,7 @@ def student_teacher(cathedra):
 
     Sort by alphabet (TBA)   
     Get Teacher by Surname (TBS)    
-    Get Teachers by Group (TBG)   Output only first added to this group teacher
+    Get Teachers by Group (TBG)   
     
     Quit (Q)
         ''')
@@ -180,17 +179,17 @@ def student_teacher(cathedra):
         elif ask.startswith("gby"):  # GBY
             year = int(input("Enter the year and you`ll receive a list of students of this year:"))
             cathedra.get_student_by_year(year)
-        elif ask.startswith("sbg"):  # SBG
+        elif ask.startswith("gbg"):  # GBG
             group = int(input(" Enter the group and you`ll receive a list of students of this group:"))
             cathedra.get_student_by_group(group)
-        elif ask.startswith("sby"):  # SBY
-            year = int(input("  Enter the year please:"))
-            cathedra.get_stud_of_cath_by_year(year)
+        # elif ask.startswith("sby"):  # SBY
+        #     year = int(input("  Enter the year please:"))
+        #     cathedra.get_stud_of_cath_by_year(year)
             # cathedra.sort_student_by_year()
         elif ask.startswith("sba"):  # SBA
             cathedra.sort_student_by_name()
         elif ask.startswith("sgy"):  # SGY
-            cathedra.sort_student_by_year()
+            cathedra.sort_cath_student_by_year()
         elif ask.startswith("sya"):  # SYA
             year = int(input("  Enter the year please:"))
             cathedra.sort_student_of_course_by_alph(year)

@@ -50,20 +50,8 @@ class Faculty:
         for year in range(6):
             print(f"** Year {year+1} students: **")
             for stud in all_student_listbox:
-                # count = 0
                 if stud.year_of_studying - 1 == year:
                     print(stud.name)
-                #     count +=1
-                # if count == 0:
-                #     print("No students here")
-
-                # def sort_student_by_year(self):
-                #     sorted = sorted(self.students, key=lambda x: x.year_of_studying)
-                #     for year in range(6):
-                #         print(f"** Year {year} students list: **")
-                #         for stud in sorted:
-                #             if stud.year_of_studying == year:
-                #                 print(f"Year: {stud.year_of_studying} . Name: {stud.name}")
 
 
 # task 6
@@ -77,7 +65,7 @@ class Faculty:
         if leng_of_list == 0:
             print("No students available yet.")
             return
-        print(f"All students of {self.name} faculty sorted by alphabet:")
+        print(f"** All students of {self.name} faculty sorted by alphabet: **")
         for name in range(leng_of_list):
             print(sort[name])
 
@@ -91,7 +79,7 @@ class Faculty:
         if leng_of_list == 0:
             print("No teachers available yet.")
             return
-        print(f"All teachers of {self.name} faculty sorted by alphabet:")
+        print(f"** All teachers of {self.name} faculty sorted by alphabet: **")
         for name in range(leng_of_list):
             print(sort[name])
 
@@ -130,7 +118,7 @@ class Cathedra:
                 print(f"{teach.name} was deleted from faculty.")
                 self.teachers.remove(teach)
                 return
-        print("No students with this name found.")
+        print("No teachers with this name found.")
         return
 
     def edit_student(self, name):
@@ -176,47 +164,38 @@ class Cathedra:
 
 
 
-# MISTAKE: The output is a list of similar strings like ['Sam', 'Sam'...] or like a single item, even if it has to be more than 1
-    #name in list
+# task 9
     def get_student_by_year(self, year):
         result = []
+        print(f"** Students of {year} year: ** ")
         for stud in self.students:
             if stud.year_of_studying == year:
                 result.append(stud.name)
-                print(f"Students of {stud.year_of_studying} course: ")
-                print(*result, sep="\n")
+        print(*result, sep="\n")
         if len(result) == 0:
-            print("No students found.")
+            print("No students of this year found.")
 
 
     def get_student_by_group(self, group):
         result = []
+        print(f"** Students of {group} group: ** ")
         for stud in self.students:
             if stud.group == group:
-                result.append(stud)
-                print(f"Students of {stud.group} group: {[stud.group for _ in result]}")
-                return
-        print("No students of this group of studying found.")
+                result.append(stud.name)
+        print(*result, sep="\n")
+        if len(result) == 0:
+            print("No students of this group found.")
+
 
     def get_teacher_by_group(self, group):
         result = []
-        print(f"Teachers of {group} group:")
+        print(f"** Teachers of {group} group: ** ")
         for teach in self.teachers:
             if teach.group == group:
-                result.append(teach)
-                print(teach.name)
-                return
-        print("No teacher teaching in this group found.")
-
-# task 9
-    def get_stud_of_cath_by_year(self, year):
-        result = []
-        for stud in self.students:
-            if stud.year_of_studying == year:
-                result.append(stud)
-                print(f"Students of {self.name} of {stud.year_of_studying} course: {[stud.name for _ in result]}")
-                return
-        print('No students on cathedra of this year found')
+                result.append(teach.name)
+        print(*result, sep="\n")
+        if len(result) == 0:
+            print("No teacher teaching in this group found.")
 
 # output all cathedra
     def get_teacher(self, cathedra):
@@ -230,13 +209,13 @@ class Cathedra:
         print("No teachers with on this cathedra found.")
 
 # task 7
-    def sort_student_by_year(self):
-        sorted = sorted(self.students, key=lambda x: x.year_of_studying)
+    def sort_cath_student_by_year(self):
         for year in range(6):
-            print(f"** Year {year} students list: **")
-            for stud in sorted:
-                if stud.year_of_studying == year:
-                    print(f"Year: {stud.year_of_studying} . Name: {stud.name}")
+            print(f"** Year {year + 1} students: **")
+            for stud in self.students:
+                if stud.year_of_studying - 1 == year:
+                    print(stud.name)
+
 
 # task 8
     def sort_student_by_name(self):
@@ -258,7 +237,7 @@ class Cathedra:
             names.append(teach.name)
         names_sorted = sorted(names)
         if len(names) == 0:
-            print("No students available yet.")
+            print("No teachers available yet.")
             return
         print("LIST OF TEACHERS SORTED BY ALPHABET")
         for nam in names_sorted:
@@ -283,6 +262,9 @@ class Cathedra:
 # task 1
 def faculty_create():
     name = input("    Enter the name of faculty you want to create:")
+    if name == '':
+        print('The name can not be none')
+        return
     faculty = Faculty(name)
     for fac in all_faculties:
         if fac.name == faculty.name:
@@ -308,13 +290,16 @@ def faculty_edit(name):
 # function which uses add_cathedra method
 def cathedra_create(fac):
     name = input("Enter the name of cathedra:")
+    if name == '':
+        print('The name can not be none')
+        return
     cathedra = Cathedra(name)
     for cath in fac.cathedras:
         if cath.name == cathedra.name:
-            print("This faculty was already added.")
+            print("This cathedra was already added.")
             return
     fac.add_cathedra(cathedra)
-    print(f"Faculty {cathedra.name} successfully created")
+    print(f"    {cathedra.name} successfully created")
 
 # function for creating instances of students
 def student_pref(cathedra):
