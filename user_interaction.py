@@ -146,7 +146,7 @@ def student_teacher(cathedra):
     Get Students by Group (GBG) 
   
     Sort by alphabet (SBA) 
-    Sort all students by years (SGY) ERROR: The input must be an integer.
+    Sort all students by years (SGY) 
     Sort year by alphabet (SYA)
 
 
